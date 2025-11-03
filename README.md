@@ -14,7 +14,7 @@
 
 <img width="366" height="350" alt="proj logo" src="https://github.com/user-attachments/assets/4f910f83-6503-4415-a34a-f649d94cae16" />
 
-Meet our mascot Boggie!!!!
+Meet our mascot Moggart!!!!
 
 
 
@@ -71,6 +71,11 @@ Meet our mascot Boggie!!!!
 ## **V. Wireframe**
 
 ### Home Page 
+![Courses page](https://github.com/user-attachments/assets/65f14582-7d3f-4e5f-bcc2-8b1d18c202c1)
+
+### Courses Page
+![Courses page (2)](https://github.com/user-attachments/assets/bc917056-ec6a-49a0-86dc-e21c61268e19)
+
 
 ### Recipe Pages
 ![Recipe](https://github.com/user-attachments/assets/1406540f-c8c3-4835-bc9b-ce42f95d0725)
