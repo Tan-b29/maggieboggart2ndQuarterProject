@@ -13,6 +13,11 @@
 
 
 
+Meet our mascot Boggie!!!!
+
+
+
+
 
 ## **III. Pages**
 
@@ -64,5 +69,9 @@
 
 ## **V. Wireframe**
 
-
+### Course Pages 
 ![alt text](<Screenshot 2025-11-03 155955.png>)
+### Recipe Pages
+![alt text](<Screenshot 2025-11-03 160731.png>)
+### Playlist Page
+![alt text](<Screenshot 2025-11-03 160808.png>)
