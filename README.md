@@ -1,4 +1,4 @@
-
+# **Team Name: WDProjStrontiumReolizoTan
 # **Syntax to Spices**
 ## **Made by STEM students, for STEM students.**
 
@@ -11,7 +11,7 @@
 ## **II. Logo** 
 
 
-
+![alt text](<proj logo.png>)
 
 Meet our mascot Boggie!!!!
 
