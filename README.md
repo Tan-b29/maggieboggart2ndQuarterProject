@@ -23,7 +23,7 @@ Meet our mascot Moggart!!!!
 ## **III. Pages**
 
 ### **Summary of Pages**
-* The Homepage contains buttons leading the user to different courses
+* The Homepage contains buttons leading the user to different courses along with Chef Moggart's Dish reccomendation.
 * All Recipe pages contain the navigation bar, the name of the dish, a description and the origin of the dish, a checklist of ingredients for the dish, and a procedural on how to make the dish
 * All Course pages contain the navigation bar and a compilation of recipes under that course
 * The Indecisive Page contains a random recipe generator
