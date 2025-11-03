@@ -71,7 +71,8 @@ Meet our mascot Moggart!!!!
 ## **V. Wireframe**
 
 ### Home Page 
-![Courses page](https://github.com/user-attachments/assets/65f14582-7d3f-4e5f-bcc2-8b1d18c202c1)
+![Courses page](https://github.com/user-attachments/assets/0453e5c3-4ea0-4cd1-847c-23e3b4437c35)
+
 
 ### Courses Page
 ![Courses page (2)](https://github.com/user-attachments/assets/bc917056-ec6a-49a0-86dc-e21c61268e19)
