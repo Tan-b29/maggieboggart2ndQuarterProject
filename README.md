@@ -1,4 +1,4 @@
-# **Team Name: WDProjStrontiumReolizoTan
+# **Team Name: WDProjStrontiumReolizoTan**
 # **Syntax to Spices**
 ## **Made by STEM students, for STEM students.**
 
@@ -11,7 +11,8 @@
 ## **II. Logo** 
 
 
-![alt text](<proj logo.png>)
+
+<img width="366" height="350" alt="proj logo" src="https://github.com/user-attachments/assets/4f910f83-6503-4415-a34a-f649d94cae16" />
 
 Meet our mascot Boggie!!!!
 
@@ -22,7 +23,7 @@ Meet our mascot Boggie!!!!
 ## **III. Pages**
 
 ### **Summary of Pages**
-* The Homepage contains the navigation bar and information on the site
+* The Homepage contains buttons leading the user to different courses
 * All Recipe pages contain the navigation bar, the name of the dish, a description and the origin of the dish, a checklist of ingredients for the dish, and a procedural on how to make the dish
 * All Course pages contain the navigation bar and a compilation of recipes under that course
 * The Indecisive Page contains a random recipe generator
@@ -69,9 +70,13 @@ Meet our mascot Boggie!!!!
 
 ## **V. Wireframe**
 
-### Course Pages 
-![alt text](<Screenshot 2025-11-03 155955.png>)
+### Home Page 
+
 ### Recipe Pages
-![alt text](<Screenshot 2025-11-03 160731.png>)
+![Recipe](https://github.com/user-attachments/assets/1406540f-c8c3-4835-bc9b-ce42f95d0725)
+
+### Indecisive page
+![Indecisive Page](https://github.com/user-attachments/assets/aa2503d5-0603-47fc-a96a-36b3385033ef)
+
 ### Playlist Page
-![alt text](<Screenshot 2025-11-03 160808.png>)
+![Playlists Page](https://github.com/user-attachments/assets/d4d62776-b565-4081-bb34-4ceb8f905569)
