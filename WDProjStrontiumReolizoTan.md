@@ -12,6 +12,8 @@
 
 
 
+
+
 ## **III. Pages**
 
 ### **Summary of Pages**
@@ -61,3 +63,6 @@
 ### Javascript will be integrated in the “indecisive” page of Syntax to Spices through an interactive random recipe generator. This feature is designed to help users who can’t decide what recipe to recreate by generating one from the cite’s selection in just one click. Each recipe generated will contain the name, image, and a short description of the recipe and a link to the recipe page for easy access.
 
 ## **V. Wireframe**
+
+
+![alt text](<Screenshot 2025-11-03 155955.png>)
