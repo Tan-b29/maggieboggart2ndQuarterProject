@@ -66,7 +66,7 @@ Meet our mascot Moggart!!!!
 ### **Playlists**: This page contains different links to spotify playlists each with a different theme or mood depending on what the site user wants to listen to. It will contain a wide range of music genres to accommodate each person’s music taste. The music is meant to be listened to while following the recipes.
 
 ## ** IV. Integration of JS**
-### Javascript will be integrated in the “indecisive” page of Syntax to Spices through an interactive random recipe generator. This feature is designed to help users who can’t decide what recipe to recreate by generating one from the cite’s selection in just one click. Each recipe generated will contain the name, image, and a short description of the recipe and a link to the recipe page for easy access.
+### Javascript will be integrated in the “indecisive” page of Syntax to Spices through an interactive random recipe generator. This feature is designed to help users who can’t decide what recipe to recreate by generating one from the cite’s selection in just one click. Each recipe generated will contain the name, image, and a short description of the recipe and a link to the recipe page for easy access. It will also be used in the home page to display a randomly chosen recipe as "Chef Moggart's Reccomedation".
 
 ## **V. Wireframe**
 
