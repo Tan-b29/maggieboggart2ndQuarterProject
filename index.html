@@ -65,60 +65,58 @@ overflow-x: hidden;
 
 
 .whisk-btn {
-  position: fixed;
-  top: 30px;
-  left: 30px;
-  background: none;
-  border: none;
-  font-size: 28px;
-  cursor: pointer;
-  color: white;
-  z-index: 1001;
-}
+          position: fixed;
+          top: 30px;
+          left: 30px;
+          background: none;
+          border: none;
+          font-size: 28px;
+          cursor: pointer;
+          color: black;
+          z-index: 1001;
+        }
 
+        .side-menu {
+          position: fixed;
+          top: 0;
+          left: -300px;
+          height: 100vh;
+          width: 300px;
+          background: white;
+          padding: 60px 30px;
+          transition: left 0.4s ease;
+          z-index: 1000;
+        }
 
-.side-menu {
-  position: fixed;
-  top: 0;
-  left: -300px;
-  height: 100vh;
-  width: 300px;
-  background: white;
-  padding: 60px 30px;
-  transition: left 0.4s ease;
-  z-index: 1000;
-}
+        .side-menu.active {
+          left: 0;
+        }
 
-.side-menu.active {
-  left: 0;
-}
+        .side-menu ul {
+          list-style: none;
+          padding-top: 80px;
+        }
 
-.side-menu ul {
-  list-style: none;
-  padding-top: 80px;
-}
+        .side-menu a {
+          color: black;
+          text-decoration: none;
+          transition: color 0.2s ease;
+        }
 
-.side-menu a {
-  color: black;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
+        .side-menu a:hover {
+          color: #f1d2e1 !important;
+          background-color: transparent !important;
+          font-size: inherit !important;
+        }
 
-.side-menu a:hover {
-  color: #f1d2e1 !important;
-  font-weight: normal;
-  text-shadow: none;
-}
+        .side-menu a:visited {
+          color: black;
+        }
 
-.side-menu a:visited {
-  color: black;
-}
-
-.side-menu li {
-  margin-bottom: 20px;
-  font-size: 28px;
-}
-
+        .side-menu li {
+          margin-bottom: 20px;
+          font-size: 28px;
+        }
 
 .next-section {
   height: 100vh;
@@ -295,7 +293,7 @@ overflow-x: hidden;
   border-color: #f1d2e1;
   box-shadow: 0 0 8px rgba(241, 210, 225, 0.5);
 }
-}
+
 
 .search-results {
   width: 100%;
@@ -609,8 +607,6 @@ overflow-x: hidden;
   cursor: pointer;
   float: right;
 }
-
-</style>
 
 </style>
 </head>
