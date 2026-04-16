@@ -16,8 +16,12 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-font-family: "Varela Round", sans-serif; 
+  font-family: "Varela Round", sans-serif; 
 overflow-x: hidden;
 }
 
@@ -647,6 +651,7 @@ overflow-x: hidden;
 <div class="side-menu" id="menu">
   <ul>
     <li><a href="index.html">Home</a></li>
+    <li><a href="#searchSection" onclick="toggleMenu()">Search Recipes</a></li>
     <li><a href="recipes/cooking-basics.html">Cooking Basics</a></li>
     <li><a href="recipes/appetizers.html">Appetizers</a></li>
     <li><a href="recipes/mains.html">Mains</a></li>
@@ -672,7 +677,7 @@ overflow-x: hidden;
   <button class="scroll-btn" onclick="scrollDown()">↓</button>
 </section>.
 
-<section class="search-section">
+<section class="search-section" id="searchSection">
   <h2 style="font-size: 2vw; color: black; margin: 0 0 10px 0;">Search Recipes</h2>
   <div class="search-container">
     <input type="text" class="search-input" id="searchInput" placeholder="Search by recipe name...">
