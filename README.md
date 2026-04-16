@@ -19,8 +19,9 @@
 ### - a random recipe generator
 
 ## **IV. This project does not (yet) include:**
-### - an account system
+### - a meal prep page
 ### - filters for searching recipes
+
 
 ## **V. How did we use local storage? (with wireframes)**
 ### We used local storage in the "add your own recipe" feature where users can make the site more personal by adding their own recipes private from other users. This feature also allows the user to search their own recipes in the search bar. Lastly, users can delete the recipes they upload on the site.
