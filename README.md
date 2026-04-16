@@ -18,7 +18,7 @@
 ### - a rating feature for each recipe
 ### - a random recipe generator
 
-## **IV. This project does not (yet) include:**
+## **IV. This project does not (yet) include: (included as of April 16 2026) **
 ### - a meal prep page
 ### - filters for searching recipes
 
