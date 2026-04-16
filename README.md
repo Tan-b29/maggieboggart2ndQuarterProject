@@ -20,7 +20,6 @@
 
 ## **IV. This project does not (yet) include:**
 ### - an account system
-### - a meal prep/planning system
 ### - filters for searching recipes
 
 ## **V. How did we use local storage? (with wireframes)**
