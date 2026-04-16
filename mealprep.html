@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Meal Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Varela Round", sans-serif;
+  background-color: white;
+  color: black;
+  padding: 20px;
+}
+
+.whisk-btn {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  height: 100vh;
+  width: 300px;
+  background: white;
+  padding: 60px 30px;
+  transition: left 0.4s ease;
+  z-index: 1000;
+  border-right: 2px solid black;
+}
+
+.side-menu.active {
+  left: 0;
+}
+
+.side-menu ul {
+  list-style: none;
+  padding-top: 80px;
+}
+
+.side-menu li {
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+.side-menu a {
+  color: black;
+  text-decoration: none;
+}
+
+.side-menu a:hover {
+  color: #f1d2e1;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 80px;
+  margin-bottom: 20px;
+  font-size: 40px;
+  color: black;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 16px;
+  color: black;
+}
+
+.controls {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.controls input {
+  padding: 12px 16px;
+  font-size: 16px;
+  width: 300px;
+  border: 2px solid black;
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+  font-family: "Varela Round", sans-serif;
+}
+
+.controls input:focus {
+  outline: none;
+  background-color: #f1d2e1;
+}
+
+.controls button {
+  background-color: black;
+  color: white;
+  border: 2px solid black;
+  padding: 12px 24px;
+  margin-left: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-family: "Varela Round", sans-serif;
+  transition: all 0.2s ease;
+}
+
+.controls button:hover {
+  background-color: white;
+  color: black;
+}
+
+.course-filter {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.course-btn {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-family: "Varela Round", sans-serif;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.course-btn:hover {
+  background-color: #f1d2e1;
+}
+
+.course-btn.active {
+  background-color: black;
+  color: white;
+}
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.day-box {
+  background-color: #f1d2e1;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 18px;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+}
+
+.day-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: black;
+}
+
+.recipes-list {
+  flex: 1;
+  margin-bottom: 16px;
+  min-height: 160px;
+  max-height: 220px;
+  overflow-y: auto;
+  border: 2px solid black;
+  border-radius: 6px;
+  padding: 12px;
+  background-color: white;
+}
+
+.recipe-item {
+  background-color: white;
+  border: 2px solid black;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recipe-item strong {
+  color: black;
+  font-weight: bold;
+}
+
+.recipe-item a {
+  color: black;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.recipe-item a:hover {
+  color: #f1d2e1;
+}
+
+.recipe-item button {
+  background-color: #f1d2e1;
+  border: 1px solid black;
+  color: black;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: "Varela Round", sans-serif;
+  font-weight: bold;
+}
+
+.recipe-item button:hover {
+  background-color: black;
+  color: white;
+}
+
+.add-recipe {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.add-recipe select {
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: "Varela Round", sans-serif;
+  background-color: white;
+  color: black;
+}
+
+.add-recipe button {
+  background-color: black;
+  color: white;
+  border: 2px solid black;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: "Varela Round", sans-serif;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.add-recipe button:hover {
+  background-color: white;
+  color: black;
+}
+
+.library-section {
+  background-color: #f1d2e1;
+  padding: 24px;
+  border-radius: 8px;
+  border: 2px solid black;
+}
+
+.library-section h2 {
+  margin-bottom: 18px;
+  color: black;
+  font-size: 24px;
+}
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.recipe-card {
+  background-color: white;
+  border: 2px solid black;
+  padding: 18px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.recipe-card h3 {
+  color: black;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.recipe-card p {
+  font-size: 14px;
+  color: black;
+  margin-bottom: 14px;
+  flex-grow: 1;
+}
+
+.recipe-card a {
+  display: inline-block;
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: "Varela Round", sans-serif;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.recipe-card a:hover {
+  background-color: #f1d2e1;
+  color: black;
+  border: 2px solid black;
+  padding: 9px 15px;
+}
+
+@media (max-width: 1024px) {
+  .days-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .recipe-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .days-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .recipe-grid {
+    grid-template-columns: 1fr;
+  }
+  .controls input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .controls button {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .days-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="side-menu" id="menu">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="recipes/cooking-basics.html">Cooking Basics</a></li>
+    <li><a href="recipes/appetizers.html">Appetizers</a></li>
+    <li><a href="recipes/mains.html">Mains</a></li>
+    <li><a href="recipes/desserts.html">Desserts</a></li>
+    <li><a href="indecisive.html">Indecisive</a></li>
+    <li><a href="playlists.html">Playlists</a></li>
+    <li><a href="mealprep.html">Meal Prep</a></li>
+    <li><a href="recipes/aboutus.html">About Us</a></li>
+    <li><a href="recipes/citations.html">Citations</a></li>
+  </ul>
+</div>
+
+<button class="whisk-btn" onclick="toggleMenu()"><img src="recipes/media/whisk.png" alt="Menu" style="width: 70px;"></button>
+
+<div class="container">
+  <h1>Weekly Meal Prep</h1>
+  
+  <p class="intro">Plan your meals for the week! Add recipes to each day and save your plan.</p>
+
+  <div class="controls">
+    <button onclick="clearWeek()">Clear Week</button>
+  </div>
+
+  <div class="days-grid" id="daysContainer"></div>
+
+  <div class="library-section">
+    <h2>Available Recipes</h2>
+    <div class="recipe-grid" id="recipeContainer"></div>
+  </div>
+</div>
+
+<script>
+const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+const BUILT_IN_RECIPES = [
+  { name: 'Caesar Salad', desc: 'Fresh romaine salad', link: 'recipes/caesar.html', id: 'caesar', course: 'appetizer' },
+  { name: 'Burger', desc: 'Juicy beef burger', link: 'recipes/burger.html', id: 'burger', course: 'main' },
+  { name: 'Tacos', desc: 'Seasoned chicken tacos', link: 'recipes/tacos.html', id: 'tacos', course: 'main' },
+  { name: 'Chili Garlic Pasta', desc: 'Spicy pasta', link: 'recipes/chiligarlic.html', id: 'chiligarlic', course: 'main' },
+  { name: 'Mac n Cheese', desc: 'Creamy mac and cheese', link: 'recipes/Mac%20n%20Cheese.html', id: 'macncheese', course: 'main' },
+  { name: 'French Fries', desc: 'Crispy fries', link: 'recipes/French%20Fries.html', id: 'frenchfries', course: 'appetizer' },
+  { name: 'Chocolate Chip Cookies', desc: 'Golden cookies with chips', link: 'recipes/choccookies.html', id: 'choccookies', course: 'dessert' },
+  { name: 'Cinnamon Roll', desc: 'Sweet cinnamon roll', link: 'recipes/cinnaroll.html', id: 'cinnaroll', course: 'dessert' },
+  { name: 'Jeremiah Cake', desc: 'Sweet cake', link: 'recipes/jeremiah-cake.html', id: 'jeremiah', course: 'dessert' }
+];
+
+let allRecipes = [...BUILT_IN_RECIPES];
+let weekPlan = {};
+
+function loadUserRecipes() {
+  try {
+    const userRecipes = JSON.parse(localStorage.getItem('userRecipes') || '[]');
+    userRecipes.forEach(r => {
+      r.link = 'recipes/recipe-view.html?id=' + r.id;
+      if (!r.course) r.course = 'appetizer';
+      allRecipes.push(r);
+    });
+  } catch(e) {
+    console.log('Error loading user recipes');
+  }
+}
+
+
+function loadPlan() {
+  try {
+    const saved = localStorage.getItem('mealPrepPlan');
+    if (saved) {
+      weekPlan = JSON.parse(saved);
+    }
+  } catch(e) {
+    console.log('Error loading plan');
+  }
+  
+  DAYS.forEach(day => {
+    if (!weekPlan[day]) {
+      weekPlan[day] = [];
+    }
+  });
+}
+
+
+function savePlan() {
+  localStorage.setItem('mealPrepPlan', JSON.stringify(weekPlan));
+}
+
+
+function renderDays() {
+  let html = '';
+  
+  DAYS.forEach(day => {
+    let itemsHtml = '';
+    
+    if (weekPlan[day].length > 0) {
+      weekPlan[day].forEach((recipe, index) => {
+        itemsHtml += `
+          <div class="recipe-item">
+            <div>
+              <strong>${recipe.name}</strong><br>
+              <a href="${recipe.link}" target="_blank">View</a>
+            </div>
+            <button onclick="removeRecipe('${day}', ${index})">Remove</button>
+          </div>
+        `;
+      });
+    } else {
+      itemsHtml = '<p style="color: #999; font-size: 14px;">No recipes added</p>';
+    }
+    
+    html += `
+      <div class="day-box">
+        <div class="day-title">${day}</div>
+        <div class="recipes-list">${itemsHtml}</div>
+        <div class="add-recipe">
+          <select id="select-${day}">
+            <option value="">Choose a recipe...</option>
+          </select>
+          <button onclick="addRecipe('${day}')">Add</button>
+        </div>
+      </div>
+    `;
+  });
+  
+  document.getElementById('daysContainer').innerHTML = html;
+  fillSelects();
+}
+
+
+function fillSelects() {
+  DAYS.forEach(day => {
+    const select = document.getElementById('select-' + day);
+    let options = '<option value="">Choose a recipe...</option>';
+    allRecipes.forEach(r => {
+      options += `<option value="${r.id}|${r.name}|${r.link}">${r.name}</option>`;
+    });
+    select.innerHTML = options;
+  });
+}
+
+function addRecipe(day) {
+  const select = document.getElementById('select-' + day);
+  if (!select.value) return;
+  
+  const [id, name, link] = select.value.split('|');
+  
+  if (weekPlan[day].some(r => r.name === name)) {
+    alert(name + ' is already on ' + day);
+    return;
+  }
+  
+  weekPlan[day].push({ id: id, name: name, link: link });
+  savePlan();
+  renderDays();
+}
+
+
+function removeRecipe(day, index) {
+  weekPlan[day].splice(index, 1);
+  savePlan();
+  renderDays();
+}
+
+
+function clearWeek() {
+  if (confirm('Clear all recipes?')) {
+    DAYS.forEach(day => {
+      weekPlan[day] = [];
+    });
+    savePlan();
+    renderDays();
+  }
+}
+
+
+function renderLibrary() {
+  let html = '';
+  allRecipes.forEach(r => {
+    html += `
+      <div class="recipe-card">
+        <h3>${r.name}</h3>
+        <p>${r.desc}</p>
+        <a href="${r.link}" target="_blank">Open Recipe</a>
+      </div>
+    `;
+  });
+  document.getElementById('recipeContainer').innerHTML = html;
+}
+
+
+function updateDisplay() {
+  renderDays();
+  renderLibrary();
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+  loadUserRecipes();
+  loadPlan();
+  updateDisplay();
+});
+
+
+function toggleMenu() {
+  document.getElementById('menu').classList.toggle('active');
+}
+</script>
+</body>
+</html>

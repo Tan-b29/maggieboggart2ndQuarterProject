@@ -75,6 +75,7 @@
         <li><a href="desserts.html">Desserts</a></li>
         <li><a href="../indecisive.html">Indecisive</a></li>
         <li><a href="../playlists.html">Playlists</a></li>
+        <li><a href="../mealprep.html">Meal Prep</a></li>
         <li><a href="aboutus.html">About Us</a></li>
         <li><a href="citations.html">Citations</a></li>
       </ul>
@@ -292,6 +293,11 @@
       <input id="eName" placeholder="Name" style="width:100%;padding:8px;margin-bottom:8px">
       <input id="eImage" placeholder="Image URL" style="width:100%;padding:8px;margin-bottom:8px">
       <input id="eLink" placeholder="Link (optional)" style="width:100%;padding:8px;margin-bottom:8px">
+      <select id="eCourse" style="width:100%;padding:8px;margin-bottom:8px;font-family:Varela Round;border:2px solid black;">
+        <option value="appetizer">Appetizer</option>
+        <option value="main">Main</option>
+        <option value="dessert">Dessert</option>
+      </select>
       <textarea id="eDesc" placeholder="Short description" style="width:100%;padding:8px;margin-bottom:8px;min-height:60px"></textarea>
       <textarea id="eIngredients" placeholder="Ingredients (one per line)" style="width:100%;padding:8px;margin-bottom:8px;min-height:80px"></textarea>
       <textarea id="eProcedure" placeholder="Procedure" style="width:100%;padding:8px;margin-bottom:8px;min-height:120px"></textarea>
@@ -370,6 +376,7 @@
     document.getElementById('eDesc').value = recipe.desc || '';
     document.getElementById('eIngredients').value = (recipe.ingredients||[]).join('\n');
     document.getElementById('eProcedure').value = recipe.procedure || '';
+    document.getElementById('eCourse').value = recipe.course || 'appetizer';
     editArea.style.display = '';
     container.style.display = 'none';
     window.scrollTo(0,0);
@@ -392,6 +399,7 @@
     recipe.desc = document.getElementById('eDesc').value.trim();
     recipe.ingredients = document.getElementById('eIngredients').value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
     recipe.procedure = document.getElementById('eProcedure').value.trim();
+    recipe.course = document.getElementById('eCourse').value || 'appetizer';
     // update storage
     const idx = all.findIndex(r=>r.id===recipe.id);
     if(idx!==-1) all[idx] = recipe; else all.push(recipe);
