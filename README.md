@@ -18,10 +18,10 @@
 ### - a rating feature for each recipe
 ### - a random recipe generator
 
-## **IV. This project does not (yet) include:**
-### - an account system
-### - a meal prep/planning system
+## **IV. This project does not (yet) include: (included as of April 16 2026) **
+### - a meal prep page
 ### - filters for searching recipes
+
 
 ## **V. How did we use local storage? (with wireframes)**
 ### We used local storage in the "add your own recipe" feature where users can make the site more personal by adding their own recipes private from other users. This feature also allows the user to search their own recipes in the search bar. Lastly, users can delete the recipes they upload on the site.

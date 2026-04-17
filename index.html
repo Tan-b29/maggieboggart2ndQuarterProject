@@ -16,8 +16,12 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-font-family: "Varela Round", sans-serif; 
+  font-family: "Varela Round", sans-serif; 
 overflow-x: hidden;
 }
 
@@ -575,6 +579,37 @@ overflow-x: hidden;
   }
 }
 
+.search-filter {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.search-filter-btn {
+  background-color: white;
+  border: 2px solid black;
+  color: black;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-family: "Varela Round", sans-serif;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.search-filter-btn:hover {
+  background-color: #f1d2e1;
+  border-color: #f1d2e1;
+}
+
+.search-filter-btn.active {
+  background-color: #f1d2e1;
+  border-color: #f1d2e1;
+  font-weight: bold;
+}
+
 .add-recipe-section {
   background: white;
   padding: 20px 20px 40px 20px;
@@ -645,12 +680,14 @@ overflow-x: hidden;
 <div class="side-menu" id="menu">
   <ul>
     <li><a href="index.html">Home</a></li>
+    <li><a href="#searchSection" onclick="toggleMenu()">Search Recipes</a></li>
     <li><a href="recipes/cooking-basics.html">Cooking Basics</a></li>
     <li><a href="recipes/appetizers.html">Appetizers</a></li>
     <li><a href="recipes/mains.html">Mains</a></li>
     <li><a href="recipes/desserts.html">Desserts</a></li>
     <li><a href="indecisive.html">Indecisive</a></li>
     <li><a href="playlists.html">Playlists</a></li>
+    <li><a href="mealprep.html">Meal Prep</a></li>
     <li><a href="recipes/aboutus.html">About Us</a></li>
     <li><a href="recipes/citations.html">Citations</a></li>
     <li id="loginMenuItem"><a href="login.html">Login</a></li>
@@ -672,10 +709,16 @@ overflow-x: hidden;
   </div>
 </section>.
 
-<section class="search-section">
+<section class="search-section" id="searchSection">
   <h2 style="font-size: 2vw; color: black; margin: 0 0 10px 0;">Search Recipes</h2>
   <div class="search-container">
     <input type="text" class="search-input" id="searchInput" placeholder="Search by recipe name...">
+  </div>
+  <div class="search-filter">
+    <button class="search-filter-btn active" onclick="filterBySearchCourse('all')">All</button>
+    <button class="search-filter-btn" onclick="filterBySearchCourse('appetizer')">Appetizer</button>
+    <button class="search-filter-btn" onclick="filterBySearchCourse('main')">Main</button>
+    <button class="search-filter-btn" onclick="filterBySearchCourse('dessert')">Dessert</button>
   </div>
   <div class="search-results" id="searchResults"></div>
 </section>
@@ -721,6 +764,7 @@ overflow-x: hidden;
 </section>
 
 <script>
+<<<<<<< HEAD
 // User management functions
 function getCurrentUser() {
   try {
@@ -886,9 +930,22 @@ const recipes = [
   { id: 'chili-garlic-pasta', name: "Chili Garlic Pasta", image: "recipes/media/chili.png", desc: "Slippery noodles are coated in a spicy, aromatic chili-garlic sauce. Chewy noodles meet bold, savory flavors in every bite. A comforting dish with a satisfying kick.", link: "recipes/chiligarlic.html" },
   { id: 'mac-n-cheese', name: "Mac n Cheese", image: "recipes/media/Mac.jpg", desc: "Mac and cheese is a comfort food dish made with macaroni pasta and a cheese sauce. It is a known side dish in American cuisine, often served as an appetizer or main course. Mac and cheese is creamy and cheesy, and can satisfy cravings.", link: "recipes/Mac%20n%20Cheese.html" },
   { id: 'jeremiah-cake', name: "Jeremiah Cake", image: "recipes/media/Jeremiah.jpg", desc: "This cake shows how big of a red flag Jeremiah is. It is a towering multi-layered cake adorned with rich and glossy decorations, symbolizing his extravagant and over-the-top personality.", link: "recipes/jeremiah-cake.html" }
+=======
+const recipes = [
+  { name: "Burger", image: "recipes/media/burger.png", desc: "A juicy beef patty is paired with melted cheese, fresh lettuce, and ripe tomatoes inside a soft bun. Each bite balances tender meat, crisp veggies, and pillowy bread. The ultimate comfort food classic.", link: "recipes/burger.html", course: "main" },
+  { name: "Tacos", image: "recipes/media/tacos.png", desc: "Tender, seasoned chicken is tucked into warm tortillas with fresh toppings like salsa and cilantro. Smoky, savory spices mingle with bright, zesty notes. A flavorful and fun handheld meal.", link: "recipes/tacos.html", course: "main" },
+  { name: "Chocolate Chip Cookies", image: "recipes/media/choccookies.png", desc: "Golden-brown cookies with a chewy center are studded with rich chocolate chips. Sweet, buttery, and irresistibly soft. A nostalgic treat that melts in your mouth.", link: "recipes/choccookies.html", course: "dessert" },
+  { name: "Caesar Salad", image: "recipes/media/Caesar.jpg", desc: "Crisp romaine lettuce is tossed in a creamy, garlicky dressing with Parmesan and crunchy croutons. Each bite is fresh and savory, with a satisfying crunch. A classic salad that feels both light and indulgent.", link: "recipes/caesar.html", course: "appetizer" },
+  { name: "French Fries", image: "recipes/media/French_Fries.jpg", desc: "French fries, a fast food staple and an appetizer kids love. It is a dish of salty and evenly cut strips of potatoes. It can be made in many ways, as thickness and cooking methods can vary.", link: "recipes/French%20Fries.html", course: "appetizer" },
+  { name: "Cinnamon Roll", image: "recipes/media/cinnamon.png", desc: "Cinnamon rolls originated in Northern Europe, particularly Sweden, where kanelbullar became a traditional sweet bread enjoyed with coffee. They have a warm, comforting flavor profile dominated by aromatic cinnamon, rich butter, and soft yeasty dough, often balanced by a hint of vanilla or creaminess from icing. The taste is sweet and spiced, with a tender, fluffy interior and a slightly caramelized, sticky swirl that makes each bite cozy and indulgent.", link: "recipes/cinnaroll.html", course: "dessert" },
+  { name: "Chili Garlic Pasta", image: "recipes/media/chili.png", desc: "Slippery noodles are coated in a spicy, aromatic chili-garlic sauce. Chewy noodles meet bold, savory flavors in every bite. A comforting dish with a satisfying kick.", link: "recipes/chiligarlic.html", course: "main" },
+  { name: "Mac n Cheese", image: "recipes/media/Mac.jpg", desc: "Mac and cheese is a comfort food dish made with macaroni pasta and a cheese sauce. It is a known side dish in American cuisine, often served as an appetizer or main course. Mac and cheese is creamy and cheesy, and can satisfy cravings.", link: "recipes/Mac%20n%20Cheese.html", course: "main" },
+  { name: "Jeremiah Cake", image: "recipes/media/Jeremiah.jpg", desc: "This cake shows how big of a red flag Jeremiah is. It is a towering multi-layered cake adorned with rich and glossy decorations, symbolizing his extravagant and over-the-top personality.", link: "recipes/jeremiah-cake.html", course: "dessert" }
+>>>>>>> c19a7f75924f7cd02e925e5c56c83c54b955f9bf
 ];
 
 let currentRecipe = null;
+let selectedSearchCourse = 'all';
 
 function generateRandomRecipe() {
   currentRecipe = recipes[Math.floor(Math.random() * recipes.length)];
@@ -908,16 +965,22 @@ function goToRecipe() {
   }
 }
 
-//reccomendation of moggart
 generateRandomRecipe();
 
-//every ten mins yung loading change it if u think its too long
 setInterval(generateRandomRecipe, 600000);
 
 function scrollDown() {
   document.querySelector('.search-section').scrollIntoView({
     behavior: 'smooth'
   });
+}
+
+function filterBySearchCourse(course) {
+  selectedSearchCourse = course;
+  const buttons = document.querySelectorAll('.search-filter-btn');
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  performSearch();
 }
 
 function performSearch() {
@@ -929,29 +992,31 @@ function performSearch() {
     return;
   }
   
-  // Load fresh user recipes from localStorage to ensure most recent
   const userRecipesStored = [];
   try {
     const stored = localStorage.getItem('userRecipes');
     if (stored) {
       const parsed = JSON.parse(stored);
       if (Array.isArray(parsed)) {
-        parsed.forEach(r => { r.isUser = true; if (!r.id) r.id = 'user-' + Date.now() + '-' + Math.floor(Math.random()*100000); });
+        parsed.forEach(r => { r.isUser = true; r.course = r.course || 'appetizer'; if (!r.id) r.id = 'user-' + Date.now() + '-' + Math.floor(Math.random()*100000); });
         userRecipesStored.push(...parsed);
       }
     }
   } catch (e) { console.error('loadUserRecipes error', e); }
   
-  // Combine built-in recipes with user recipes
   const builtInRecipes = recipes.filter(r => !r.isUser);
   const allRecipes = [...builtInRecipes, ...userRecipesStored];
   
-  const filteredRecipes = allRecipes.filter(recipe => 
-    recipe.name.toLowerCase().includes(searchInput) || 
-    recipe.desc.toLowerCase().includes(searchInput) ||
-    (recipe.ingredients && recipe.ingredients.join(' ').toLowerCase().includes(searchInput)) ||
-    (recipe.procedure && recipe.procedure.toLowerCase().includes(searchInput))
-  );
+  const filteredRecipes = allRecipes.filter(recipe => {
+    const matchesSearch = recipe.name.toLowerCase().includes(searchInput) || 
+      recipe.desc.toLowerCase().includes(searchInput) ||
+      (recipe.ingredients && recipe.ingredients.join(' ').toLowerCase().includes(searchInput)) ||
+      (recipe.procedure && recipe.procedure.toLowerCase().includes(searchInput));
+    
+    const matchesCourse = selectedSearchCourse === 'all' || recipe.course === selectedSearchCourse;
+    
+    return matchesSearch && matchesCourse;
+  });
   
   if (filteredRecipes.length === 0) {
     resultsContainer.innerHTML = '<div class="no-results">No recipes found. Try searching for something else!</div>';
@@ -1023,7 +1088,6 @@ function saveUserRecipes(){
     localStorage.setItem(USER_RECIPES_KEY, JSON.stringify(userAdded));
   } catch (e) { console.error('saveUserRecipes', e); }
 }
-//omddd i hated using boolean and the math thing here but its liters=ally the notif
 function addRecipeFromForm(e){
   e.preventDefault();
   const name = document.getElementById('newRecipeName').value.trim();
@@ -1061,7 +1125,6 @@ function openRecipe(index) {
   const recipe = recipes[index];
   if (!recipe) return;
   if (recipe.isUser) {
-    // it opens a page for the recipes the user makes
     window.location.href = `recipes/recipe-view.html?id=${encodeURIComponent(recipe.id)}`;
     return;
   }
@@ -1092,13 +1155,10 @@ function closeRecipeModal(){
 }
 
 
-//  u can find it in the search on input
 document.addEventListener('DOMContentLoaded', function() {
   const searchInput = document.getElementById('searchInput');
   if (searchInput) {
-    // this is acc tuff like it kinda updates search even if u js add a letter like netflix
     searchInput.addEventListener('input', performSearch);
-    //  support Enter key
     searchInput.addEventListener('keypress', function(e) {
       if (e.key === 'Enter') {
         performSearch();
@@ -1107,7 +1167,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// 
 document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('addRecipeForm');
   if (form) form.addEventListener('submit', addRecipeFromForm);
@@ -1117,12 +1176,15 @@ function toggleMenu() {
   document.getElementById('menu').classList.toggle('active');
 }
 
+<<<<<<< HEAD
 // Initialize user interface on page load
 document.addEventListener('DOMContentLoaded', function() {
   updateUserInterface();
 });
 
 // show loading screen
+=======
+>>>>>>> c19a7f75924f7cd02e925e5c56c83c54b955f9bf
 document.addEventListener('click', function(event) {
   const link = event.target.closest('a');
   if (link && !link.hasAttribute('target')) {

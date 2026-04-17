@@ -71,6 +71,7 @@
     <button class="whisk-btn" onclick="toggleMenu()"><img src="media/whisk.png" style="width: 65px; height: 65px;"></button>
 
     <div class="side-menu" id="menu">
+<<<<<<< HEAD
   <ul>
     <li><a href="../index.html">Home</a></li>
     <li><a href="cooking-basics.html">Cooking Basics</a></li>
@@ -85,6 +86,21 @@
     <li id="logoutMenuItem" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
   </ul>
 </div>
+=======
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="cooking-basics.html">Cooking Basics</a></li>
+        <li><a href="appetizers.html">Appetizers</a></li>
+        <li><a href="mains.html">Mains</a></li>
+        <li><a href="desserts.html">Desserts</a></li>
+        <li><a href="../indecisive.html">Indecisive</a></li>
+        <li><a href="../playlists.html">Playlists</a></li>
+        <li><a href="../mealprep.html">Meal Prep</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="citations.html">Citations</a></li>
+      </ul>
+    </div>
+>>>>>>> c19a7f75924f7cd02e925e5c56c83c54b955f9bf
 
 <style>
   .search-section { background: white; padding: 40px 20px 15px 20px; display: flex; flex-direction: column; align-items: center; gap: 20px; min-height: auto; }
@@ -315,6 +331,11 @@
       <input id="eName" placeholder="Name" style="width:100%;padding:8px;margin-bottom:8px">
       <input id="eImage" placeholder="Image URL" style="width:100%;padding:8px;margin-bottom:8px">
       <input id="eLink" placeholder="Link (optional)" style="width:100%;padding:8px;margin-bottom:8px">
+      <select id="eCourse" style="width:100%;padding:8px;margin-bottom:8px;font-family:Varela Round;border:2px solid black;">
+        <option value="appetizer">Appetizer</option>
+        <option value="main">Main</option>
+        <option value="dessert">Dessert</option>
+      </select>
       <textarea id="eDesc" placeholder="Short description" style="width:100%;padding:8px;margin-bottom:8px;min-height:60px"></textarea>
       <textarea id="eIngredients" placeholder="Ingredients (one per line)" style="width:100%;padding:8px;margin-bottom:8px;min-height:80px"></textarea>
       <textarea id="eProcedure" placeholder="Procedure" style="width:100%;padding:8px;margin-bottom:8px;min-height:120px"></textarea>
@@ -402,6 +423,7 @@
     document.getElementById('eDesc').value = recipe.desc || '';
     document.getElementById('eIngredients').value = (recipe.ingredients||[]).join('\n');
     document.getElementById('eProcedure').value = recipe.procedure || '';
+    document.getElementById('eCourse').value = recipe.course || 'appetizer';
     editArea.style.display = '';
     container.style.display = 'none';
     window.scrollTo(0,0);
@@ -424,6 +446,7 @@
     recipe.desc = document.getElementById('eDesc').value.trim();
     recipe.ingredients = document.getElementById('eIngredients').value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
     recipe.procedure = document.getElementById('eProcedure').value.trim();
+    recipe.course = document.getElementById('eCourse').value || 'appetizer';
     // update storage
     const idx = all.findIndex(r=>r.id===recipe.id);
     if(idx!==-1) all[idx] = recipe; else all.push(recipe);
