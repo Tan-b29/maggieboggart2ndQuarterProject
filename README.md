@@ -20,6 +20,7 @@
 
 ## **IV. This project does not (yet) include: (included as of April 16 2026) **
 ### - a meal prep page
+### - an accounts page
 ### - filters for searching recipes
 
 
