@@ -3,61 +3,63 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Syntax to Spices | Homepage</title>
+    <title>Cooked.</title>
 
     <style>
-        .whisk-btn {
-  position: fixed;
-  top: 30px;
-  left: 30px;
-  background: none;
-  border: none;
-  font-size: 28px;
-  cursor: pointer;
-  color: black;
-  z-index: 1001;
-}
+.whisk-btn {
+          position: fixed;
+          top: 30px;
+          left: 30px;
+          background: none;
+          border: none;
+          font-size: 28px;
+          cursor: pointer;
+          color: black;
+          z-index: 1001;
+        }
 
-.side-menu {
-  position: fixed;
-  top: 0;
-  left: -300px;
-  height: 100vh;
-  width: 300px;
-  background: white;
-  padding: 60px 30px;
-  transition: left 0.4s ease;
-  z-index: 1000;
-}
+        .side-menu {
+          position: fixed;
+          top: 0;
+          left: -300px;
+          height: 100vh;
+          width: 300px;
+          background: white;
+          padding: 60px 30px;
+          transition: left 0.4s ease;
+          z-index: 1000;
+        }
 
-.side-menu.active {
-  left: 0;
-}
+        .side-menu.active {
+          left: 0;
+        }
 
-.side-menu ul {
-  list-style: none;
-  padding-top: 80px;
-}
+        .side-menu ul {
+          list-style: none;
+          padding-top: 40px;
+        }
 
-.side-menu a {
-  color: black;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
+        .side-menu a {
+          color: black;
+          text-decoration: none;
+          transition: color 0.2s ease;
+          white-space: nowrap;
+        }
 
-.side-menu a:hover {
-  color: #f1d2e1;
-}
+        .side-menu a:hover {
+          color: #f1d2e1 !important;
+          background-color: transparent !important;
+          font-size: inherit !important;
+        }
 
-.side-menu a:visited {
-  color: black;
-  text-decoration: none;
-}
+        .side-menu a:visited {
+          color: black;
+        }
 
-.side-menu li {
-  margin-bottom: 20px;
-  font-size: 28px;
-}
+        .side-menu li {
+          margin-bottom: 10px;
+          font-size: 28px;
+        }
 
 .loading-overlay {
   display: none;
@@ -193,6 +195,22 @@
   border-radius: 5px;
   margin-bottom: 10px;
 }
+.recipe-card-no-image {
+  width: 100%;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1d2e1;
+  color: #333;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 
 .recipe-card h3 {
   margin: 8px 0;
@@ -494,25 +512,27 @@
 
     </style>
 
-    <link rel="icon" href="media/faviconmog.png">
+    <link rel="icon" href="media/moggart.png">
 
 </head>
 
 <body>
 
     <div class="side-menu" id="menu">
-      <ul>
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="cooking-basics.html">Cooking Basics</a></li>
-        <li><a href="appetizers.html">Appetizers</a></li>
-        <li><a href="mains.html">Mains</a></li>
-        <li><a href="desserts.html">Desserts</a></li>
-        <li><a href="../indecisive.html">Indecisive</a></li>
-        <li><a href="../playlists.html">Playlists</a></li>
-        <li><a href="aboutus.html">About Us</a></li>
-        <li><a href="citations.html">Citations</a></li>
-      </ul>
-    </div>
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="cooking-basics.html">Cooking Basics</a></li>
+    <li><a href="appetizers.html">Appetizers</a></li>
+    <li><a href="mains.html">Mains</a></li>
+    <li><a href="desserts.html">Desserts</a></li>
+    <li><a href="../indecisive.html">Indecisive</a></li>
+    <li><a href="../playlists.html">Playlists</a></li>
+    <li><a href="aboutus.html">About Us</a></li>
+    <li><a href="citations.html">Citations</a></li>
+    <li id="loginMenuItem"><a href="../login.html">Login</a></li>
+    <li id="logoutMenuItem" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
+  </ul>
+</div>
 
     <div class="loading-overlay" id="loading">
       <img src="media/moggart.png" alt="Loading...">
@@ -557,18 +577,6 @@
     </main>
 
 
-   <!-- <div class="layout">
-    <aside class="sidebar">
-        <nav>
-            <a href="cooking-basics.html">Cooking Basics</a>
-            <a href="appetizers.html">Appetizers</a>
-            <a href="mains.html">Mains</a>
-            <a href="desserts.html">Desserts</a>
-            <a href="indecisive.html">Indecisive</a>
-            <a href="playlists.html">Playlists</a>
-        </nav>
-    </aside>
-    </div> -->
 
 
     <footer>
@@ -627,7 +635,7 @@ function performSearch() {
     const recipeLink = recipe.isUser ? recipe.id : recipe.link;
     html += `
       <div class="recipe-card">
-        <img src="${recipe.image}" alt="${recipe.name}">
+        ${recipe.image && recipe.image.trim() ? `<img src="${recipe.image}" alt="${recipe.name}">` : `<div class="recipe-card-no-image">No image</div>`}
         <div class="recipe-card-content">
           <h3>${recipe.name}</h3>
           <p>${recipe.desc}</p>
@@ -684,3 +692,9 @@ function navigateToRecipe(link, isUser) {
 </script>
 </body>
 </html>
+
+
+
+
+
+

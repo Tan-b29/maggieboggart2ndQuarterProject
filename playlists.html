@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Syntax to Spices | Homepage</title>
+    <title>Cooked.</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
 
@@ -17,61 +17,61 @@
             text-align: center;
         }
 
-        .whisk-btn {
-  position: fixed;
-  top: 30px;
-  left: 30px;
-  background: none;
-  border: none;
-  font-size: 28px;
-  cursor: pointer;
-  color: black;
-  z-index: 1001;
-}
+.whisk-btn {
+          position: fixed;
+          top: 30px;
+          left: 30px;
+          background: none;
+          border: none;
+          font-size: 28px;
+          cursor: pointer;
+          color: black;
+          z-index: 1001;
+        }
 
+        .side-menu {
+          position: fixed;
+          top: 0;
+          left: -300px;
+          height: 100vh;
+          width: 300px;
+          background: white;
+          padding: 60px 30px;
+          transition: left 0.4s ease;
+          z-index: 1000;
+        }
 
-.side-menu {
-  position: fixed;
-  top: 0;
-  left: -300px;
-  height: 100vh;
-  width: 300px;
-  background: white;
-  padding: 60px 30px;
-  transition: left 0.4s ease;
-  z-index: 1000;
-  text-align: left;
-}
+        .side-menu.active {
+          left: 0;
+        }
 
-.side-menu.active {
-  left: 0;
-}
+        .side-menu ul {
+          list-style: none;
+          padding-top: 40px;
+        }
 
-.side-menu ul {
-  list-style: none;
-  padding-top: 80px;
-}
+        .side-menu a {
+          color: black;
+          text-decoration: none;
+          transition: color 0.2s ease;
+          white-space: nowrap;
+        }
 
-.side-menu a {
-  color: black;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
+        .side-menu a:hover {
+          color: #f1d2e1 !important;
+          background-color: transparent !important;
+          font-size: inherit !important;
+        }
 
-.side-menu a:hover {
-  color: #f1d2e1 !important;
-  background-color: transparent !important;
-  font-size: inherit !important;
-}
+        .side-menu a:visited {
+          color: black;
+        }
 
-.side-menu a:visited {
-  color: black;
-}
+        .side-menu li {
+          margin-bottom: 10px;
+          font-size: 28px;
+        }
 
-.side-menu li {
-  margin-bottom: 20px;
-  font-size: 28px;
-}
 
         .loading-overlay {
           display: none;
@@ -362,23 +362,26 @@
             }
         }
     </style>
+    <link rel="icon" href="recipes/media/moggart.png">
 </head>
 
 <body>
 
-    <div class="side-menu" id="menu">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="recipes/cooking-basics.html">Cooking Basics</a></li>
-        <li><a href="recipes/appetizers.html">Appetizers</a></li>
-        <li><a href="recipes/mains.html">Mains</a></li>
-        <li><a href="recipes/desserts.html">Desserts</a></li>
-        <li><a href="indecisive.html">Indecisive</a></li>
-        <li><a href="playlists.html">Playlists</a></li>
-        <li><a href="recipes/aboutus.html">About Us</a></li>
-        <li><a href="recipes/citations.html">Citations</a></li>
-      </ul>
-    </div>
+<div class="side-menu" id="menu">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="recipes/cooking-basics.html">Cooking Basics</a></li>
+    <li><a href="recipes/appetizers.html">Appetizers</a></li>
+    <li><a href="recipes/mains.html">Mains</a></li>
+    <li><a href="recipes/desserts.html">Desserts</a></li>
+    <li><a href="indecisive.html">Indecisive</a></li>
+    <li><a href="playlists.html">Playlists</a></li>
+    <li><a href="recipes/aboutus.html">About Us</a></li>
+    <li><a href="recipes/citations.html">Citations</a></li>
+    <li id="loginMenuItem"><a href="login.html">Login</a></li>
+    <li id="logoutMenuItem" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
+  </ul>
+</div>
 
     <div class="loading-overlay" id="loading">
       <img src="recipes/media/moggart.png" alt="Loading...">
@@ -501,7 +504,35 @@ function navigateToRecipe(link) {
   }, 2000);
 }
 
+function updateUserInterface() {
+  const currentUser = getCurrentUser();
+  const loginItem = document.getElementById('loginMenuItem');
+  const logoutItem = document.getElementById('logoutMenuItem');
+
+  if (currentUser) {
+    loginItem.style.display = 'none';
+    logoutItem.style.display = 'block';
+  } else {
+    loginItem.style.display = 'block';
+    logoutItem.style.display = 'none';
+  }
+}
+
+function getCurrentUser() {
+  try {
+    return JSON.parse(localStorage.getItem('currentUser') || 'null');
+  } catch (e) {
+    return null;
+  }
+}
+
+function logout() {
+  localStorage.removeItem('currentUser');
+  location.reload();
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+  updateUserInterface();
   const searchInput = document.getElementById('searchInput');
   if (searchInput) {
     searchInput.addEventListener('input', performSearch);
@@ -515,3 +546,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
+
+

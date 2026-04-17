@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cooked.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Varela Round", sans-serif;
+            background-color: #f1d2e1;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 3rem;
+            color: transparent;
+            -webkit-text-stroke: 2px black;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+
+        .tab-buttons {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: "Varela Round", sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            background: #f1d2e1;
+            border-bottom: 2px solid black;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: "Varela Round", sans-serif;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #f1d2e1;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: "Varela Round", sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            background: #f1d2e1;
+            color: black;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .message.error {
+            background: #ffe6e6;
+            color: #cc0000;
+            border: 1px solid #cc0000;
+        }
+
+        .message.success {
+            background: #e6ffe6;
+            color: #006600;
+            border: 1px solid #006600;
+        }
+
+        .link {
+            color: #f1d2e1;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .back-link:hover {
+            color: #f1d2e1;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Home</a>
+
+    <div class="container">
+        <div class="logo">COOKED</div>
+
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="showTab('login')">Login</button>
+            <button class="tab-btn" onclick="showTab('register')">Register</button>
+        </div>
+
+        <div id="login-form" class="form-container">
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" id="loginUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+
+        <div id="register-form" class="form-container" style="display: none;">
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">Username</label>
+                    <input type="text" id="registerUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirm Password</label>
+                    <input type="password" id="registerConfirmPassword" required>
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+        </div>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        // User management functions
+        function getUsers() {
+            try {
+                return JSON.parse(localStorage.getItem('users') || '[]');
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        function getCurrentUser() {
+            try {
+                return JSON.parse(localStorage.getItem('currentUser') || 'null');
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function setCurrentUser(user) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+        }
+
+        function showMessage(message, type = 'error') {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = message;
+            messageEl.className = `message ${type}`;
+            messageEl.style.display = 'block';
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 5000);
+        }
+
+        function showTab(tab) {
+            document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('register-form').style.display = tab === 'register' ? 'block' : 'none';
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[onclick="showTab('${tab}')"]`).classList.add('active');
+        }
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            const users = getUsers();
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                setCurrentUser(user);
+                showMessage('Login successful! Redirecting...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1000);
+            } else {
+                showMessage('Invalid username or password');
+            }
+        });
+
+        // Register form handler
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('registerUsername').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                showMessage('Passwords do not match');
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage('Password must be at least 6 characters long');
+                return;
+            }
+
+            const users = getUsers();
+
+            if (users.some(u => u.username === username)) {
+                showMessage('Username already exists');
+                return;
+            }
+
+            if (users.some(u => u.email === email)) {
+                showMessage('Email already registered');
+                return;
+            }
+
+            const newUser = {
+                id: Date.now().toString(),
+                username,
+                email,
+                password,
+                savedRecipes: [],
+                createdAt: new Date().toISOString()
+            };
+
+            users.push(newUser);
+            saveUsers(users);
+            setCurrentUser(newUser);
+
+            showMessage('Registration successful! Redirecting...', 'success');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        });
+
+        // Check if already logged in
+        if (getCurrentUser()) {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

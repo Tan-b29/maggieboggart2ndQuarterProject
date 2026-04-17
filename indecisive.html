@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Syntax to Spices | Homepage</title>
+    <title>Cooked.</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
 
@@ -60,13 +60,14 @@
 
         .side-menu ul {
           list-style: none;
-          padding-top: 80px;
+          padding-top: 40px;
         }
 
         .side-menu a {
           color: black;
           text-decoration: none;
           transition: color 0.2s ease;
+          white-space: nowrap;
         }
 
         .side-menu a:hover {
@@ -80,7 +81,7 @@
         }
 
         .side-menu li {
-          margin-bottom: 20px;
+          margin-bottom: 10px;
           font-size: 28px;
         }
 
@@ -581,25 +582,27 @@
 
     </style>
 
-    <link rel="icon" href="media/faviconmog.png">
+    <link rel="icon" href="recipes/media/moggart.png">
 
 </head>
 
 <body>
 
     <div class="side-menu" id="menu">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="recipes/cooking-basics.html">Cooking Basics</a></li>
-        <li><a href="recipes/appetizers.html">Appetizers</a></li>
-        <li><a href="recipes/mains.html">Mains</a></li>
-        <li><a href="recipes/desserts.html">Desserts</a></li>
-        <li><a href="indecisive.html">Indecisive</a></li>
-        <li><a href="playlists.html">Playlists</a></li>
-        <li><a href="recipes/aboutus.html">About Us</a></li>
-        <li><a href="recipes/citations.html">Citations</a></li>
-      </ul>
-    </div>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="recipes/cooking-basics.html">Cooking Basics</a></li>
+    <li><a href="recipes/appetizers.html">Appetizers</a></li>
+    <li><a href="recipes/mains.html">Mains</a></li>
+    <li><a href="recipes/desserts.html">Desserts</a></li>
+    <li><a href="indecisive.html">Indecisive</a></li>
+    <li><a href="playlists.html">Playlists</a></li>
+    <li><a href="recipes/aboutus.html">About Us</a></li>
+    <li><a href="recipes/citations.html">Citations</a></li>
+    <li id="loginMenuItem"><a href="login.html">Login</a></li>
+    <li id="logoutMenuItem" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
+  </ul>
+</div>
 
     <div class="loading-overlay" id="loading">
       <img src="recipes/media/moggart.png" alt="Loading...">
@@ -779,7 +782,35 @@ function navigateToRecipe(link) {
   }, 2000);
 }
 
+function updateUserInterface() {
+  const currentUser = getCurrentUser();
+  const loginItem = document.getElementById('loginMenuItem');
+  const logoutItem = document.getElementById('logoutMenuItem');
+
+  if (currentUser) {
+    loginItem.style.display = 'none';
+    logoutItem.style.display = 'block';
+  } else {
+    loginItem.style.display = 'block';
+    logoutItem.style.display = 'none';
+  }
+}
+
+function getCurrentUser() {
+  try {
+    return JSON.parse(localStorage.getItem('currentUser') || 'null');
+  } catch (e) {
+    return null;
+  }
+}
+
+function logout() {
+  localStorage.removeItem('currentUser');
+  location.reload();
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+  updateUserInterface();
   const searchInput = document.getElementById('searchInput');
   if (searchInput) {
     searchInput.addEventListener('input', performSearch);
@@ -794,3 +825,6 @@ document.addEventListener('DOMContentLoaded', function() {
     <script src="indecisive.js"></script>
  </body>
 </html>
+
+
+

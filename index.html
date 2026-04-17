@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cooked</title>
+<title>Cooked.</title>
 
 
 <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
@@ -50,6 +50,7 @@ overflow-x: hidden;
 .scroll-btn {
   position: absolute;
   bottom: 40px;
+  left: 50%;
   background: none;
   border: none;
   font-size: 40px;
@@ -94,13 +95,14 @@ overflow-x: hidden;
 
         .side-menu ul {
           list-style: none;
-          padding-top: 80px;
+          padding-top: 40px;
         }
 
         .side-menu a {
           color: black;
           text-decoration: none;
           transition: color 0.2s ease;
+          white-space: nowrap;
         }
 
         .side-menu a:hover {
@@ -114,7 +116,7 @@ overflow-x: hidden;
         }
 
         .side-menu li {
-          margin-bottom: 20px;
+          margin-bottom: 10px;
           font-size: 28px;
         }
 
@@ -261,6 +263,16 @@ overflow-x: hidden;
   }
 }
 
+.saved-recipes-section {
+  background: white;
+  padding: 40px 20px 15px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  min-height: auto;
+}
+
 .search-section {
   background: white;
   padding: 40px 20px 15px 20px;
@@ -384,6 +396,22 @@ overflow-x: hidden;
   object-fit: cover;
   border-radius: 5px;
   margin-bottom: 10px;
+}
+
+.recipe-card-no-image {
+  width: 100%;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1d2e1;
+  color: #333;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .recipe-card h3 {
@@ -609,6 +637,7 @@ overflow-x: hidden;
 }
 
 </style>
+<link rel="icon" href="recipes/media/moggart.png">
 </head>
 <body>
 
@@ -624,6 +653,8 @@ overflow-x: hidden;
     <li><a href="playlists.html">Playlists</a></li>
     <li><a href="recipes/aboutus.html">About Us</a></li>
     <li><a href="recipes/citations.html">Citations</a></li>
+    <li id="loginMenuItem"><a href="login.html">Login</a></li>
+    <li id="logoutMenuItem" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
   </ul>
 </div>
 
@@ -635,9 +666,10 @@ overflow-x: hidden;
 <section class="hero">
   <button class="whisk-btn" onclick="toggleMenu()"><img src="recipes/media/whisk.png" style="width: 65px; height: 65px;"></button>
 
-  <h1 class="hero-text">C<img src="recipes/media/moggart.png" class="cat-icon">OKED</h1>
-
-  <button class="scroll-btn" onclick="scrollDown()">↓</button>
+  <div id="heroContent">
+    <h1 class="hero-text">C<img src="recipes/media/moggart.png" class="cat-icon">OKED</h1>
+    <button class="scroll-btn" onclick="scrollDown()">↓</button>
+  </div>
 </section>.
 
 <section class="search-section">
@@ -646,6 +678,11 @@ overflow-x: hidden;
     <input type="text" class="search-input" id="searchInput" placeholder="Search by recipe name...">
   </div>
   <div class="search-results" id="searchResults"></div>
+</section>
+
+<section class="saved-recipes-section" id="savedRecipesSection" style="display: none;">
+  <h2 style="font-size: 2vw; color: black; margin: 0 0 10px 0;">Your Saved Recipes</h2>
+  <div class="search-results" id="savedRecipes"></div>
 </section>
 
 <section class="next-section">
@@ -684,17 +721,171 @@ overflow-x: hidden;
 </section>
 
 <script>
+// User management functions
+function getCurrentUser() {
+  try {
+    return JSON.parse(localStorage.getItem('currentUser') || 'null');
+  } catch (e) {
+    return null;
+  }
+}
+
+function setCurrentUser(user) {
+  localStorage.setItem('currentUser', JSON.stringify(user));
+}
+
+function getUsers() {
+  try {
+    return JSON.parse(localStorage.getItem('users') || '[]');
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveUsers(users) {
+  localStorage.setItem('users', JSON.stringify(users));
+}
+
+function logout() {
+  localStorage.removeItem('currentUser');
+  updateUserInterface();
+  location.reload();
+}
+
+function updateUserInterface() {
+  const currentUser = getCurrentUser();
+  const loginItem = document.getElementById('loginMenuItem');
+  const logoutItem = document.getElementById('logoutMenuItem');
+  const savedSection = document.getElementById('savedRecipesSection');
+  const heroContent = document.getElementById('heroContent');
+
+  if (currentUser) {
+    loginItem.style.display = 'none';
+    logoutItem.style.display = 'block';
+    savedSection.style.display = 'block';
+    heroContent.innerHTML = `
+      <h1 class="hero-text">C<img src="recipes/media/moggart.png" class="cat-icon">OKED</h1>
+      <p style="color: black; font-size: 1.5vw; margin: 10px 0; text-align: center;">Welcome back, ${currentUser.username}!</p>
+      <button class="scroll-btn" onclick="scrollDown()">↓</button>
+    `;
+    displaySavedRecipes();
+  } else {
+    loginItem.style.display = 'block';
+    logoutItem.style.display = 'none';
+    savedSection.style.display = 'none';
+    heroContent.innerHTML = `
+      <h1 class="hero-text">C<img src="recipes/media/moggart.png" class="cat-icon">OKED</h1>
+      <button class="scroll-btn" onclick="scrollDown()">↓</button>
+    `;
+  }
+}
+
+function saveRecipe(recipeId) {
+  const currentUser = getCurrentUser();
+  if (!currentUser) {
+    alert('Please login to save recipes');
+    window.location.href = 'login.html';
+    return;
+  }
+
+  const users = getUsers();
+  const userIndex = users.findIndex(u => u.id === currentUser.id);
+  if (userIndex === -1) return;
+
+  if (!users[userIndex].savedRecipes) {
+    users[userIndex].savedRecipes = [];
+  }
+
+  if (!users[userIndex].savedRecipes.includes(recipeId)) {
+    users[userIndex].savedRecipes.push(recipeId);
+    saveUsers(users);
+    setCurrentUser(users[userIndex]);
+    displaySavedRecipes();
+    alert('Recipe saved!');
+  } else {
+    alert('Recipe already saved!');
+  }
+}
+
+function unsaveRecipe(recipeId) {
+  const currentUser = getCurrentUser();
+  if (!currentUser) return;
+
+  const users = getUsers();
+  const userIndex = users.findIndex(u => u.id === currentUser.id);
+  if (userIndex === -1) return;
+
+  users[userIndex].savedRecipes = users[userIndex].savedRecipes.filter(id => id !== recipeId);
+  saveUsers(users);
+  setCurrentUser(users[userIndex]);
+  displaySavedRecipes();
+}
+
+function displaySavedRecipes() {
+  const currentUser = getCurrentUser();
+  if (!currentUser) return;
+  currentUser.savedRecipes = currentUser.savedRecipes || [];
+
+  const savedContainer = document.getElementById('savedRecipes');
+  const allRecipes = [...recipes];
+
+  const savedRecipeObjects = allRecipes.filter(recipe => {
+    const recipeId = recipe.id || recipe.name.toLowerCase().replace(/\s+/g, '-');
+    return currentUser.savedRecipes.includes(recipeId);
+  });
+
+  if (savedRecipeObjects.length === 0) {
+    savedContainer.innerHTML = '<div class="no-results">No saved recipes yet. Search and save some recipes!</div>';
+    return;
+  }
+
+  const resultsHTML = `
+    <div class="search-results-horizontal">
+      ${savedRecipeObjects.map(recipe => {
+        const recipeId = recipe.id || recipe.name.toLowerCase().replace(/\s+/g, '-');
+        const imageHtml = recipe.image && recipe.image.trim() ? `<img src="${recipe.image}" alt="${recipe.name}">` : `<div class="recipe-card-no-image">No image</div>`;
+        return `<div class="recipe-card">
+          ${imageHtml}
+          <h3>${recipe.name}</h3>
+          <div style="display: flex; gap: 5px; margin-top: 5px;">
+            <button class="recipe-card-btn" onclick="openRecipeById('${recipeId}')">View</button>
+            <button class="recipe-card-btn" style="background: #ff6b6b; color: white;" onclick="unsaveRecipe('${recipeId}')">Unsave</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+
+  savedContainer.innerHTML = resultsHTML;
+}
+
+function openRecipeById(recipeId) {
+  const allRecipes = [...recipes];
+  const recipe = allRecipes.find(r => (r.id || r.name.toLowerCase().replace(/\s+/g, '-')) === recipeId);
+  if (!recipe) return;
+
+  if (recipe.isUser) {
+    window.location.href = `recipes/recipe-view.html?id=${encodeURIComponent(recipe.id)}`;
+    return;
+  }
+
+  const index = recipes.indexOf(recipe);
+  if (index !== -1) {
+    openRecipe(index);
+  }
+}
+
 // recco recipes
 const recipes = [
-  { name: "Burger", image: "recipes/media/burger.png", desc: "A juicy beef patty is paired with melted cheese, fresh lettuce, and ripe tomatoes inside a soft bun. Each bite balances tender meat, crisp veggies, and pillowy bread. The ultimate comfort food classic.", link: "recipes/burger.html" },
-  { name: "Tacos", image: "recipes/media/tacos.png", desc: "Tender, seasoned chicken is tucked into warm tortillas with fresh toppings like salsa and cilantro. Smoky, savory spices mingle with bright, zesty notes. A flavorful and fun handheld meal.", link: "recipes/tacos.html" },
-  { name: "Chocolate Chip Cookies", image: "recipes/media/choccookies.png", desc: "Golden-brown cookies with a chewy center are studded with rich chocolate chips. Sweet, buttery, and irresistibly soft. A nostalgic treat that melts in your mouth.", link: "recipes/choccookies.html" },
-  { name: "Caesar Salad", image: "recipes/media/Caesar.jpg", desc: "Crisp romaine lettuce is tossed in a creamy, garlicky dressing with Parmesan and crunchy croutons. Each bite is fresh and savory, with a satisfying crunch. A classic salad that feels both light and indulgent.", link: "recipes/caesar.html" },
-  { name: "French Fries", image: "recipes/media/French_Fries.jpg", desc: "French fries, a fast food staple and an appetizer kids love. It is a dish of salty and evenly cut strips of potatoes. It can be made in many ways, as thickness and cooking methods can vary.", link: "recipes/French%20Fries.html" },
-  { name: "Cinnamon Roll", image: "recipes/media/cinnamon.png", desc: "Cinnamon rolls originated in Northern Europe, particularly Sweden, where kanelbullar became a traditional sweet bread enjoyed with coffee. They have a warm, comforting flavor profile dominated by aromatic cinnamon, rich butter, and soft yeasty dough, often balanced by a hint of vanilla or creaminess from icing. The taste is sweet and spiced, with a tender, fluffy interior and a slightly caramelized, sticky swirl that makes each bite cozy and indulgent.", link: "recipes/cinnaroll.html" },
-  { name: "Chili Garlic Pasta", image: "recipes/media/chili.png", desc: "Slippery noodles are coated in a spicy, aromatic chili-garlic sauce. Chewy noodles meet bold, savory flavors in every bite. A comforting dish with a satisfying kick.", link: "recipes/chiligarlic.html" },
-  { name: "Mac n Cheese", image: "recipes/media/Mac.jpg", desc: "Mac and cheese is a comfort food dish made with macaroni pasta and a cheese sauce. It is a known side dish in American cuisine, often served as an appetizer or main course. Mac and cheese is creamy and cheesy, and can satisfy cravings.", link: "recipes/Mac%20n%20Cheese.html" },
-  { name: "Jeremiah Cake", image: "recipes/media/Jeremiah.jpg", desc: "This cake shows how big of a red flag Jeremiah is. It is a towering multi-layered cake adorned with rich and glossy decorations, symbolizing his extravagant and over-the-top personality.", link: "recipes/jeremiah-cake.html" }
+  { id: 'burger', name: "Burger", image: "recipes/media/burger.png", desc: "A juicy beef patty is paired with melted cheese, fresh lettuce, and ripe tomatoes inside a soft bun. Each bite balances tender meat, crisp veggies, and pillowy bread. The ultimate comfort food classic.", link: "recipes/burger.html" },
+  { id: 'tacos', name: "Tacos", image: "recipes/media/tacos.png", desc: "Tender, seasoned chicken is tucked into warm tortillas with fresh toppings like salsa and cilantro. Smoky, savory spices mingle with bright, zesty notes. A flavorful and fun handheld meal.", link: "recipes/tacos.html" },
+  { id: 'chocolate-chip-cookies', name: "Chocolate Chip Cookies", image: "recipes/media/choccookies.png", desc: "Golden-brown cookies with a chewy center are studded with rich chocolate chips. Sweet, buttery, and irresistibly soft. A nostalgic treat that melts in your mouth.", link: "recipes/choccookies.html" },
+  { id: 'caesar-salad', name: "Caesar Salad", image: "recipes/media/Caesar.jpg", desc: "Crisp romaine lettuce is tossed in a creamy, garlicky dressing with Parmesan and crunchy croutons. Each bite is fresh and savory, with a satisfying crunch. A classic salad that feels both light and indulgent.", link: "recipes/caesar.html" },
+  { id: 'french-fries', name: "French Fries", image: "recipes/media/French_Fries.jpg", desc: "French fries, a fast food staple and an appetizer kids love. It is a dish of salty and evenly cut strips of potatoes. It can be made in many ways, as thickness and cooking methods can vary.", link: "recipes/French%20Fries.html" },
+  { id: 'cinnamon-roll', name: "Cinnamon Roll", image: "recipes/media/cinnamon.png", desc: "Cinnamon rolls originated in Northern Europe, particularly Sweden, where kanelbullar became a traditional sweet bread enjoyed with coffee. They have a warm, comforting flavor profile dominated by aromatic cinnamon, rich butter, and soft yeasty dough, often balanced by a hint of vanilla or creaminess from icing. The taste is sweet and spiced, with a tender, fluffy interior and a slightly caramelized, sticky swirl that makes each bite cozy and indulgent.", link: "recipes/cinnaroll.html" },
+  { id: 'chili-garlic-pasta', name: "Chili Garlic Pasta", image: "recipes/media/chili.png", desc: "Slippery noodles are coated in a spicy, aromatic chili-garlic sauce. Chewy noodles meet bold, savory flavors in every bite. A comforting dish with a satisfying kick.", link: "recipes/chiligarlic.html" },
+  { id: 'mac-n-cheese', name: "Mac n Cheese", image: "recipes/media/Mac.jpg", desc: "Mac and cheese is a comfort food dish made with macaroni pasta and a cheese sauce. It is a known side dish in American cuisine, often served as an appetizer or main course. Mac and cheese is creamy and cheesy, and can satisfy cravings.", link: "recipes/Mac%20n%20Cheese.html" },
+  { id: 'jeremiah-cake', name: "Jeremiah Cake", image: "recipes/media/Jeremiah.jpg", desc: "This cake shows how big of a red flag Jeremiah is. It is a towering multi-layered cake adorned with rich and glossy decorations, symbolizing his extravagant and over-the-top personality.", link: "recipes/jeremiah-cake.html" }
 ];
 
 let currentRecipe = null;
@@ -770,18 +961,29 @@ function performSearch() {
   const resultsHTML = `
     <div class="search-results-horizontal">
       ${filteredRecipes.map(recipe => {
+        const currentUser = getCurrentUser();
+        const recipeId = recipe.id || recipe.name.toLowerCase().replace(/\s+/g, '-');
+        const isSaved = currentUser && currentUser.savedRecipes && currentUser.savedRecipes.includes(recipeId);
+        
+        const imageHtml = recipe.image && recipe.image.trim() ? `<img src="${recipe.image}" alt="${recipe.name}">` : `<div class="recipe-card-no-image">No image</div>`;
         if (recipe.isUser) {
-          return `<div class="recipe-card" onclick="window.location.href='recipes/recipe-view.html?id=${encodeURIComponent(recipe.id)}'">
-            <img src="${recipe.image}" alt="${recipe.name}">
+          return `<div class="recipe-card">
+            ${imageHtml}
             <h3>${recipe.name}</h3>
-            <button class="recipe-card-btn">View</button>
+            <div style="display: flex; gap: 5px; margin-top: 5px;">
+              <button class="recipe-card-btn" onclick="window.location.href='recipes/recipe-view.html?id=${encodeURIComponent(recipe.id)}'">View</button>
+              ${currentUser ? `<button class="recipe-card-btn" style="background: ${isSaved ? '#ff6b6b' : '#4CAF50'}; color: white;" onclick="${isSaved ? `unsaveRecipe('${recipeId}')` : `saveRecipe('${recipeId}')`}">${isSaved ? 'Unsave' : 'Save'}</button>` : ''}
+            </div>
           </div>`;
         } else {
           const idx = recipes.indexOf(recipe);
-          return `<div class="recipe-card" onclick="openRecipe(${idx})">
-            <img src="${recipe.image}" alt="${recipe.name}">
+          return `<div class="recipe-card">
+            ${imageHtml}
             <h3>${recipe.name}</h3>
-            <button class="recipe-card-btn">View</button>
+            <div style="display: flex; gap: 5px; margin-top: 5px;">
+              <button class="recipe-card-btn" onclick="openRecipe(${idx})">View</button>
+              ${currentUser ? `<button class="recipe-card-btn" style="background: ${isSaved ? '#ff6b6b' : '#4CAF50'}; color: white;" onclick="${isSaved ? `unsaveRecipe('${recipeId}')` : `saveRecipe('${recipeId}')`}">${isSaved ? 'Unsave' : 'Save'}</button>` : ''}
+            </div>
           </div>`;
         }
       }).join('')}
@@ -831,9 +1033,25 @@ function addRecipeFromForm(e){
   const procedure = document.getElementById('newRecipeProcedure').value.trim();
   if (!name) { alert('Please enter a recipe name.'); return; }
   const ingredients = ingredientsRaw ? ingredientsRaw.split(/\r?\n/).map(s => s.trim()).filter(Boolean) : [];
-  const recipe = { id: 'user-' + Date.now() + '-' + Math.floor(Math.random()*100000), name, image: image || 'recipes/media/burger.png', desc, ingredients, procedure, isUser: true };
+  const recipe = { id: 'user-' + Date.now() + '-' + Math.floor(Math.random()*100000), name, image: image || '', desc, ingredients, procedure, isUser: true };
   recipes.push(recipe);
   saveUserRecipes();
+
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    const users = getUsers();
+    const userIndex = users.findIndex(u => u.id === currentUser.id);
+    if (userIndex !== -1) {
+      users[userIndex].savedRecipes = users[userIndex].savedRecipes || [];
+      if (!users[userIndex].savedRecipes.includes(recipe.id)) {
+        users[userIndex].savedRecipes.push(recipe.id);
+      }
+      saveUsers(users);
+      setCurrentUser(users[userIndex]);
+      displaySavedRecipes();
+    }
+  }
+
   generateRandomRecipe();
   document.getElementById('addRecipeForm').reset();
   alert("Recipe added! It's now searchable and viewable on this site.");
@@ -854,10 +1072,11 @@ function openRecipe(index) {
   const modal = document.getElementById('recipeModal');
   if (!modal) return;
   const content = modal.querySelector('.content');
+  const modalImageHtml = recipe.image && recipe.image.trim() ? `<img src="${recipe.image}" style="width:150px;height:150px;object-fit:cover;margin:10px 0;">` : `<div class="recipe-card-no-image" style="width:150px;height:150px;margin:10px auto;">No image</div>`;
   content.innerHTML = `
     <button class="close-btn" onclick="closeRecipeModal()">Close</button>
     <h2>${recipe.name}</h2>
-    <img src="${recipe.image || 'recipes/media/burger.png'}" style="width:150px;height:150px;object-fit:cover;margin:10px 0;">
+    ${modalImageHtml}
     <p><strong>Description:</strong> ${recipe.desc || ''}</p>
     <p><strong>Ingredients:</strong></p>
     <ul>${(recipe.ingredients||[]).map(i=>`<li>${i}</li>`).join('')}</ul>
@@ -898,6 +1117,11 @@ function toggleMenu() {
   document.getElementById('menu').classList.toggle('active');
 }
 
+// Initialize user interface on page load
+document.addEventListener('DOMContentLoaded', function() {
+  updateUserInterface();
+});
+
 // show loading screen
 document.addEventListener('click', function(event) {
   const link = event.target.closest('a');
@@ -918,3 +1142,6 @@ document.addEventListener('click', function(event) {
 
 </body>
 </html>
+
+
+

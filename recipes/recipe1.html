@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-......    <title>Syntax to Spices | Homepage</title>
+......    <title>Cooked.</title>
 
     <!-- <style>
         body {
@@ -120,7 +120,8 @@
 
 .side-menu ul {
   list-style: none;
-  padding-top: 80px;
+  padding-top: 40px;
+          
 }
 
 .side-menu a {
@@ -207,7 +208,7 @@
         .image-box {
             height: 200px;
             border: 2px solid black;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             }
 
         .ingredients {
@@ -228,7 +229,7 @@
         .procedure {
             border: 2px solid black;
             padding: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             }
 
         footer {
@@ -463,17 +464,20 @@
 <body data-recipe-id="recipe1">
 
     <div class="side-menu" id="menu">
-      <ul>
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="cooking-basics.html">Cooking Basics</a></li>
-        <li><a href="appetizers.html">Appetizers</a></li>
-        <li><a href="mains.html">Mains</a></li>
-        <li><a href="desserts.html">Desserts</a></li>
-        <li><a href="../indecisive.html">Indecisive</a></li>
-        <li><a href="../playlists.html">Playlists</a></li>
-        <li><a href="aboutus.html">About Us</a></li>
-      </ul>
-    </div>
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="cooking-basics.html">Cooking Basics</a></li>
+    <li><a href="appetizers.html">Appetizers</a></li>
+    <li><a href="mains.html">Mains</a></li>
+    <li><a href="desserts.html">Desserts</a></li>
+    <li><a href="../indecisive.html">Indecisive</a></li>
+    <li><a href="../playlists.html">Playlists</a></li>
+    <li><a href="aboutus.html">About Us</a></li>
+    <li><a href="citations.html">Citations</a></li>
+    <li id="loginMenuItem"><a href="../login.html">Login</a></li>
+    <li id="logoutMenuItem" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
+  </ul>
+</div>
 
     <div class="loading-overlay" id="loading">
       <img src="media/moggart.png" alt="Loading...">
@@ -576,7 +580,7 @@ function performSearch() {
   filteredRecipes.forEach(recipe => {
     html += `
       <div class="recipe-card">
-        <img src="${recipe.image}" alt="${recipe.name}">
+        ${recipe.image && recipe.image.trim() ? `<img src="${recipe.image}" alt="${recipe.name}">` : `<div class="recipe-card-no-image">No image</div>`}
         <div class="recipe-card-content">
           <h3>${recipe.name}</h3>
           <p>${recipe.desc}</p>
@@ -630,3 +634,10 @@ function navigateToRecipe(link) {
     <script src="ratings.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
