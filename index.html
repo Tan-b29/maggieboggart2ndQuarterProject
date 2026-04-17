@@ -920,15 +920,15 @@ function openRecipeById(recipeId) {
 
 // recco recipes
 const recipes = [
-  { id: 'burger', name: "Burger", image: "recipes/media/burger.png", desc: "A juicy beef patty is paired with melted cheese, fresh lettuce, and ripe tomatoes inside a soft bun. Each bite balances tender meat, crisp veggies, and pillowy bread. The ultimate comfort food classic.", link: "recipes/burger.html" },
-  { id: 'tacos', name: "Tacos", image: "recipes/media/tacos.png", desc: "Tender, seasoned chicken is tucked into warm tortillas with fresh toppings like salsa and cilantro. Smoky, savory spices mingle with bright, zesty notes. A flavorful and fun handheld meal.", link: "recipes/tacos.html" },
-  { id: 'chocolate-chip-cookies', name: "Chocolate Chip Cookies", image: "recipes/media/choccookies.png", desc: "Golden-brown cookies with a chewy center are studded with rich chocolate chips. Sweet, buttery, and irresistibly soft. A nostalgic treat that melts in your mouth.", link: "recipes/choccookies.html" },
-  { id: 'caesar-salad', name: "Caesar Salad", image: "recipes/media/Caesar.jpg", desc: "Crisp romaine lettuce is tossed in a creamy, garlicky dressing with Parmesan and crunchy croutons. Each bite is fresh and savory, with a satisfying crunch. A classic salad that feels both light and indulgent.", link: "recipes/caesar.html" },
-  { id: 'french-fries', name: "French Fries", image: "recipes/media/French_Fries.jpg", desc: "French fries, a fast food staple and an appetizer kids love. It is a dish of salty and evenly cut strips of potatoes. It can be made in many ways, as thickness and cooking methods can vary.", link: "recipes/French%20Fries.html" },
-  { id: 'cinnamon-roll', name: "Cinnamon Roll", image: "recipes/media/cinnamon.png", desc: "Cinnamon rolls originated in Northern Europe, particularly Sweden, where kanelbullar became a traditional sweet bread enjoyed with coffee. They have a warm, comforting flavor profile dominated by aromatic cinnamon, rich butter, and soft yeasty dough, often balanced by a hint of vanilla or creaminess from icing. The taste is sweet and spiced, with a tender, fluffy interior and a slightly caramelized, sticky swirl that makes each bite cozy and indulgent.", link: "recipes/cinnaroll.html" },
-  { id: 'chili-garlic-pasta', name: "Chili Garlic Pasta", image: "recipes/media/chili.png", desc: "Slippery noodles are coated in a spicy, aromatic chili-garlic sauce. Chewy noodles meet bold, savory flavors in every bite. A comforting dish with a satisfying kick.", link: "recipes/chiligarlic.html" },
-  { id: 'mac-n-cheese', name: "Mac n Cheese", image: "recipes/media/Mac.jpg", desc: "Mac and cheese is a comfort food dish made with macaroni pasta and a cheese sauce. It is a known side dish in American cuisine, often served as an appetizer or main course. Mac and cheese is creamy and cheesy, and can satisfy cravings.", link: "recipes/Mac%20n%20Cheese.html" },
-  { id: 'jeremiah-cake', name: "Jeremiah Cake", image: "recipes/media/Jeremiah.jpg", desc: "This cake shows how big of a red flag Jeremiah is. It is a towering multi-layered cake adorned with rich and glossy decorations, symbolizing his extravagant and over-the-top personality.", link: "recipes/jeremiah-cake.html" }
+  { id: 'burger', name: "Burger", image: "recipes/media/burger.png", desc: "A juicy beef patty is paired with melted cheese, fresh lettuce, and ripe tomatoes inside a soft bun. Each bite balances tender meat, crisp veggies, and pillowy bread. The ultimate comfort food classic.", link: "recipes/burger.html", course: 'main' },
+  { id: 'tacos', name: "Tacos", image: "recipes/media/tacos.png", desc: "Tender, seasoned chicken is tucked into warm tortillas with fresh toppings like salsa and cilantro. Smoky, savory spices mingle with bright, zesty notes. A flavorful and fun handheld meal.", link: "recipes/tacos.html", course: 'main' },
+  { id: 'chocolate-chip-cookies', name: "Chocolate Chip Cookies", image: "recipes/media/choccookies.png", desc: "Golden-brown cookies with a chewy center are studded with rich chocolate chips. Sweet, buttery, and irresistibly soft. A nostalgic treat that melts in your mouth.", link: "recipes/choccookies.html", course: 'dessert' },
+  { id: 'caesar-salad', name: "Caesar Salad", image: "recipes/media/Caesar.jpg", desc: "Crisp romaine lettuce is tossed in a creamy, garlicky dressing with Parmesan and crunchy croutons. Each bite is fresh and savory, with a satisfying crunch. A classic salad that feels both light and indulgent.", link: "recipes/caesar.html", course: 'appetizer' },
+  { id: 'french-fries', name: "French Fries", image: "recipes/media/French_Fries.jpg", desc: "French fries, a fast food staple and an appetizer kids love. It is a dish of salty and evenly cut strips of potatoes. It can be made in many ways, as thickness and cooking methods can vary.", link: "recipes/French%20Fries.html", course: 'appetizer' },
+  { id: 'cinnamon-roll', name: "Cinnamon Roll", image: "recipes/media/cinnamon.png", desc: "Cinnamon rolls originated in Northern Europe, particularly Sweden, where kanelbullar became a traditional sweet bread enjoyed with coffee. They have a warm, comforting flavor profile dominated by aromatic cinnamon, rich butter, and soft yeasty dough, often balanced by a hint of vanilla or creaminess from icing. The taste is sweet and spiced, with a tender, fluffy interior and a slightly caramelized, sticky swirl that makes each bite cozy and indulgent.", link: "recipes/cinnaroll.html", course: 'dessert' },
+  { id: 'chili-garlic-pasta', name: "Chili Garlic Pasta", image: "recipes/media/chili.png", desc: "Slippery noodles are coated in a spicy, aromatic chili-garlic sauce. Chewy noodles meet bold, savory flavors in every bite. A comforting dish with a satisfying kick.", link: "recipes/chiligarlic.html", course: 'appetizer' },
+  { id: 'mac-n-cheese', name: "Mac n Cheese", image: "recipes/media/Mac.jpg", desc: "Mac and cheese is a comfort food dish made with macaroni pasta and a cheese sauce. It is a known side dish in American cuisine, often served as an appetizer or main course. Mac and cheese is creamy and cheesy, and can satisfy cravings.", link: "recipes/Mac%20n%20Cheese.html", course: 'main' },
+  { id: 'jeremiah-cake', name: "Jeremiah Cake", image: "recipes/media/Jeremiah.jpg", desc: "This cake shows how big of a red flag Jeremiah is. It is a towering multi-layered cake adorned with rich and glossy decorations, symbolizing his extravagant and over-the-top personality.", link: "recipes/jeremiah-cake.html", course: 'dessert' }
 ];
 
 let currentRecipe = null;
@@ -974,11 +974,7 @@ function performSearch() {
   const searchInput = document.getElementById('searchInput').value.toLowerCase().trim();
   const resultsContainer = document.getElementById('searchResults');
   
-  if (!searchInput) {
-    resultsContainer.innerHTML = '';
-    return;
-  }
-  
+  // Load fresh user recipes from localStorage
   const userRecipesStored = [];
   try {
     const stored = localStorage.getItem('userRecipes');
@@ -994,6 +990,17 @@ function performSearch() {
   const builtInRecipes = recipes.filter(r => !r.isUser);
   const allRecipes = [...builtInRecipes, ...userRecipesStored];
   
+  // If no search input, filter by course only
+  if (!searchInput) {
+    const courseFilteredRecipes = selectedSearchCourse === 'all' ? allRecipes : allRecipes.filter(r => r.course === selectedSearchCourse);
+    if (courseFilteredRecipes.length === 0) {
+      resultsContainer.innerHTML = '<div class="no-results">No recipes found in this category.</div>';
+      return;
+    }
+    displayFilteredResults(courseFilteredRecipes, resultsContainer);
+    return;
+  }
+  
   const filteredRecipes = allRecipes.filter(recipe => {
     const matchesSearch = recipe.name.toLowerCase().includes(searchInput) || 
       recipe.desc.toLowerCase().includes(searchInput) ||
@@ -1005,6 +1012,10 @@ function performSearch() {
     return matchesSearch && matchesCourse;
   });
   
+  displayFilteredResults(filteredRecipes, resultsContainer);
+}
+
+function displayFilteredResults(filteredRecipes, resultsContainer) {
   if (filteredRecipes.length === 0) {
     resultsContainer.innerHTML = '<div class="no-results">No recipes found. Try searching for something else!</div>';
     return;
